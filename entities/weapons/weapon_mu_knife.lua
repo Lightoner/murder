@@ -4,7 +4,7 @@ if SERVER then
 		
 	util.AddNetworkString("mu_knife_charge")
 
-	SWEP.KnifeChargeConvar = CreateConVar("mu_knife_charge", 1, bit.bor(FCVAR_NOTIFY), "Should we use a charge bar on alt attack?" )
+	SWEP.KnifeChargeConvar = CreateConVar("mu_knife_charge", 0, bit.bor(FCVAR_NOTIFY), "Should we use a charge bar on alt attack?" )
 else
 	killicon.AddFont("weapon_mu_knife", "HL2MPTypeDeath", "5", Color(0, 0, 255, 255))
 	
@@ -246,7 +246,7 @@ function SWEP:SecondaryAttack()
 			net.WriteDouble(self.ChargeStart)
 			net.Send(self.Owner)
 		else
-			self:ThrowKnife(0.6)
+			self:ThrowKnife(1)
 		end
 	end
 
