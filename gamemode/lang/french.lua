@@ -12,7 +12,6 @@ pt.teamSpectators = "Spectateurs"
 pt.teamPlayers = "Joueurs"
 
 
-pt.killedTeamKill = "{player} a tué un innocent"
 pt.killedMurderer = "{player} a tué le meurtrier"
 
 pt.murdererDeathUnknown = "Le meurtrier est mort dans de mystérieuses circonstances"
@@ -114,3 +113,5 @@ pt.ttt_tbut_reuse   = "Réutilisable"
 pt.ttt_tbut_retime  = "Réutilisable après {num}s"
 pt.ttt_tbut_waittime  = "Réutilisable dans {timesec}"
 pt.ttt_tbut_help    = "Appuyez sur {key} pour l'activer"
+
+pt.tryTeamKill = "{player} est mort pour avoir essayé de tuer un innocent"

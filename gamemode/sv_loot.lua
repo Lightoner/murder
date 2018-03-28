@@ -131,15 +131,8 @@ local function giveMagnum(ply)
 	if ply:HasWeapon("weapon_mu_magnum") then
 		ply:DropWeapon(ply:GetWeapon("weapon_mu_magnum"))
 	end
-	if ply:GetTKer() then
-		// if they are penalised, drop the gun on the floor
-		ply.TempGiveMagnum = true // temporarily allow them to pickup the gun
-		ply:Give("weapon_mu_magnum")
-		ply:DropWeapon(ply:GetWeapon("weapon_mu_magnum"))
-	else
-		ply:Give("weapon_mu_magnum")
-		ply:SelectWeapon("weapon_mu_magnum")
-	end
+	ply:Give("weapon_mu_magnum")
+	ply:SelectWeapon("weapon_mu_magnum")
 end
 
 function GM:PlayerPickupLoot(ply, ent)

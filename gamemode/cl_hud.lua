@@ -345,10 +345,6 @@ end
 function GM:PostDrawHUD()
 	if self:GetRound() == 1 then
 		local dest = 0
-		if self.TKerPenalty then
-			-- dest = (math.sin(CurTime()) + 1) * 30 / 2 + 230
-			dest = 254
-		end
 		self.ScreenDarkness = math.Clamp(math.Approach(self.ScreenDarkness or 0, dest, FrameTime() * 120), 0, 255)
 
 		if self.ScreenDarkness > 0 then

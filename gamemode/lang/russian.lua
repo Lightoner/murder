@@ -18,7 +18,6 @@ pt.teamSpectators = "Наблюдатели"
 pt.teamPlayers = "Игроки"
 pt.teamAss = "Торт"
 
-pt.killedTeamKill = "{player} убил невиновного свидетеля"
 pt.killedMurderer = "{player} убил убийцу"
 
 pt.murdererDeathUnknown = "Убийца умер при странном стечении обстоятельств"

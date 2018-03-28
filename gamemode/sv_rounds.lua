@@ -149,7 +149,6 @@ function GM:EndTheRound(reason, murderer)
 
 	local players = team.GetPlayers(2)
 	for k, ply in pairs(players) do
-		ply:SetTKer(false)
 		ply:SetMurdererRevealed(false)
 		ply:UnMurdererDisguise()
 	end
@@ -322,7 +321,6 @@ function GM:StartNewRound()
 		ply.LootCollected = 0
 		ply.HasMoved = false
 		ply.Frozen = true
-		ply:SetTKer(false)
 		ply:CalculateSpeed()
 		ply:GenerateBystanderName()
 	end

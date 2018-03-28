@@ -133,7 +133,3 @@ function GM:PreDrawMurderHalos(Add)
 		end
 	end
 end
-
-net.Receive("mu_tker", function (len)
-	GAMEMODE.TKerPenalty = net.ReadUInt(8) != 0
-end)

@@ -180,12 +180,6 @@ function plyMeta:CalculateSpeed()
 		canrun = true
 	end
 
-	if self:GetTKer() then
-		walk = walk * 0.5
-		run = run * 0.5
-		jumppower = jumppower * 0.5
-	end
-
 	local wep = self:GetActiveWeapon()
 	if IsValid(wep) then
 		if wep.GetCarrying && wep:GetCarrying() then
@@ -291,17 +285,6 @@ function GM:PlayerDeath(ply, Inflictor, attacker )
 				if self.RemoveDisguiseOnKill:GetBool() then
 					attacker:UnMurdererDisguise()
 				end
-			elseif attacker != ply then
-				if self.ShowBystanderTKs:GetBool() then
-					local col = attacker:GetPlayerColor()
-					local msgs = Translator:AdvVarTranslate(translate.killedTeamKill, {
-						player = {text = attacker:Nick() .. ", " .. attacker:GetBystanderName(), color = Color(col.x * 255, col.y * 255, col.z * 255)}
-					})
-					local ct = ChatText()
-					ct:AddParts(msgs)
-					ct:SendAll()
-				end
-				attacker:SetTKer(true)
 			end
 		end
 	else
@@ -357,15 +340,6 @@ function GM:PlayerCanPickupWeapon( ply, ent )
 	if ent:GetClass() == "weapon_mu_magnum" then
 		// murderer can't have the gun
 		if ply:GetMurderer() then
-			return false
-		end
-
-		// penalty for killing a bystander
-		if ply:GetTKer() then
-			if ply.TempGiveMagnum then
-				ply.TempGiveMagnum = nil
-				return true
-			end
 			return false
 		end
 	end
@@ -519,10 +493,6 @@ end
 
 function GM:PlayerShouldTaunt( ply, actid )
 	return false
-end
-
-function GM:GetTKPenaltyTime()
-	return math.max(0, self.TKPenaltyTime:GetFloat())
 end
 
 function GM:PlayerUse(ply, ent)

@@ -12,7 +12,6 @@ pt.teamSpectators = "觀眾"
 pt.teamPlayers = "玩家"
 pt.teamAss = "蛋糕"
 
-pt.killedTeamKill = "{player}殺死一個無辜的旁觀者"
 pt.killedMurderer = "{player}殺了兇手"
 
 pt.murdererDeathUnknown = "兇手莫名其妙的死亡"

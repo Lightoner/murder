@@ -12,7 +12,6 @@ pt.hands = "DÅ‚onie"
 pt.teamSpectators = "Widzowie"
 pt.teamPlayers = "Gracze"
 
-pt.killedTeamKill = "{player} zabiÅ‚(a) niewinnego Å›wiadka"
 pt.killedMurderer = "{player} zabiÅ‚(a) mordercÄ™"
 
 pt.murdererDeathUnknown = "Morderca zmarÅ‚ w niewyjaÅ›nionych okolicznoÅ›ciach"
