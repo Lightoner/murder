@@ -3,7 +3,7 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
-
+local ENT_LIFETIME_MAX = 10
 function ENT:Initialize()
 	self:SetModel("models/weapons/w_knife_t.mdl")
 
@@ -22,7 +22,7 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
-	self:Fire("kill", "", 30)
+	self:Fire("kill", "", ENT_LIFETIME_MAX)
 
 	self.HitSomething = false
 end
@@ -38,19 +38,18 @@ function ENT:Think()
 	end
 	if self.HitSomething && self:GetVelocity():Length2D() < 1.5 then
 		self.HitSomething = false
-		local knife = ents.Create("weapon_mu_knife")
-		knife:SetPos(self:GetPos())
-		knife:SetAngles(self:GetAngles())
-		knife:Spawn()
 		self:Remove()
-		local phys = knife:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:SetVelocity(self:GetVelocity())
-		end
 	end
 
 	self:NextThink(CurTime())
 	return true
+end
+
+function ENT:OnRemove()
+	local owner = self:GetOwner()
+	if owner:GetMurderer() then
+		owner:Give("weapon_mu_knife")
+	end
 end
 
 local function addangle(ang,ang2)
