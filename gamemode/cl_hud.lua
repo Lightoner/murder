@@ -93,14 +93,6 @@ function GM:HUDPaint()
 		self:RenderSpectate()
 	end
 
-	if self.Debug:GetBool() then
-		local h = draw.GetFontHeight("MersRadial")
-		local y = 0
-
-		draw.DrawText("Footsteps: " .. table.Count(FootStepsG), "MersRadial", ScrW() - 20, 20 + y, color_white, 2)
-		y = y + h
-	end
-
 	self:DrawRadialMenu()
 end
 

@@ -2,7 +2,6 @@ include("sh_translate.lua")
 include("shared.lua")
 include("cl_hud.lua")
 include("cl_scoreboard.lua")
-include("cl_footsteps.lua")
 include("cl_respawn.lua")
 include("cl_murderer.lua")
 include("cl_player.lua")
@@ -24,7 +23,7 @@ GM.HaloRenderLoot = CreateClientConVar( "mu_halo_loot", 1, true, true ) // shouu
 GM.HaloRenderKnife = CreateClientConVar( "mu_halo_knife", 1, true, true ) // shouuld we render murderer's knife halos
 
 function GM:Initialize() 
-	self:FootStepsInit()
+
 end
 
 GM.FogEmitters = {}
@@ -96,11 +95,11 @@ function GM:PostDrawViewModel( vm, ply, weapon )
 end
 
 function GM:RenderScene( origin, angles, fov )
-	-- self:FootStepsRenderScene(origin, angles, fov)
+
 end
 
 function GM:PostDrawTranslucentRenderables()
-	self:DrawFootprints()
+
 end
 
 function GM:PreDrawMurderHalos(Add)

@@ -347,10 +347,6 @@ function EntityMeta:SetPlayerColor(vec)
 	self:SetNWVector("playerColor", vec)
 end
 
-function GM:PlayerFootstep(ply, pos, foot, sound, volume, filter)
-	self:FootstepsOnFootstep(ply, pos, foot, sound, volume, filter)
-end
-
 function GM:PlayerCanPickupWeapon( ply, ent )
 
 	// can't pickup a weapon twice

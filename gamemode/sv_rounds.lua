@@ -273,7 +273,6 @@ function GM:StartNewRound()
 	end
 	game.CleanUpMap()
 	self:InitPostEntityAndMapCleanup()
-	self:ClearAllFootsteps()
 
 
 
