@@ -67,9 +67,6 @@ pt.adminPanel = "管理面板"
 
 pt.spectating = "旁觀中"
 
-pt.adMelonbomberWhy = "為何不試試"
-pt.adMelonbomberBy = "一個為謀殺而創造的遊戲模式"
-
 pt.voiceHelp = "求救"
 pt.voiceHelpDescription = "喊救命"
 pt.voiceFunny = "搞笑"

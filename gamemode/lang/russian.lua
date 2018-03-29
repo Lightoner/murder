@@ -73,8 +73,6 @@ pt.adminPanel = "Панель администратора"
 
 pt.spectating = "Наблюдение"
 
-pt.adMelonbomberWhy = "Почему бы не попробовать "
-pt.adMelonbomberBy = " игровой режим от создателя Murder"
 pt.voiceHelp = "Помогите"
 pt.voiceHelpDescription = "Позвать на помощь"
 pt.voiceFunny = "Шутка"

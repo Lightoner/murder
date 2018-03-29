@@ -67,9 +67,6 @@ pt.adminPanel = "Menu Admin"
 
 pt.spectating = "Vous observez"
 
-pt.adMelonbomberWhy = "Pourquoi ne pas essayer "
-pt.adMelonbomberBy = " un mode de jeu par le créateur de Murder"
-
 pt.voiceHelp = "Aide"
 pt.voiceHelpDescription = "Cri d'aide"
 pt.voiceFunny = "Blague"

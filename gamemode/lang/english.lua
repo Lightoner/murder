@@ -67,9 +67,6 @@ pt.adminPanel = "Admin Panel"
 
 pt.spectating = "Spectating"
 
-pt.adMelonbomberWhy = "Why not try "
-pt.adMelonbomberBy = " a gamemode by the creator of Murder"
-
 pt.voiceHelp = "Help"
 pt.voiceHelpDescription = "Yell for help"
 pt.voiceFunny = "Funny"

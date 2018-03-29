@@ -67,8 +67,6 @@ pt.adminPanel = "관리자 패널"
 
 pt.spectating = "관전중"
 
-pt.adMelonbomberWhy = "머더 게임모드의 제작자가 만든 "
-pt.adMelonbomberBy = " 한번 해보세요!"
 pt.voiceHelp = "도와줘!"
 pt.voiceHelpDescription = "도움을 요청"
 pt.voiceFunny = "농담"

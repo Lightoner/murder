@@ -67,9 +67,6 @@ pt.adminPanel = "Panel administratora"
 
 pt.spectating = "OglÄ…danie"
 
-pt.adMelonbomberWhy = "SprÃ³buj: "
-pt.adMelonbomberBy = " - mod od twÃ³rcy Murder?"
-
 pt.voiceHelp = "PÅ‚acz"
 pt.voiceHelpDescription = "BÅ‚agaj o pomoc"
 pt.voiceFunny = "Zabawa"
