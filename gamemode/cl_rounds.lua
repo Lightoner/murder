@@ -34,6 +34,8 @@ net.Receive("SetRound", function (length)
 			end
 		end)
 		GAMEMODE.LootCollected = 0
+		GAMEMODE.RoundStartTime = net.ReadDouble()
+		GAMEMODE.RoundTimeMax = net.ReadUInt(32)
 	end
 end)
 

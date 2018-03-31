@@ -112,3 +112,4 @@ pt.ttt_tbut_waittime  = "Reusable in {timesec}"
 pt.ttt_tbut_help    = "Press {key} to activate"
 
 pt.tryTeamKill = "{player} died for trying to kill an innocent"
+pt.roundTimeLeft = "Time left: {time}"

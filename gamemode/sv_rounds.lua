@@ -2,6 +2,8 @@
 util.AddNetworkString("SetRound")
 util.AddNetworkString("DeclareWinner")
 
+GM.RoundTimeMax = CreateConVar("mu_round_time_max", 600, bit.bor(FCVAR_NOTIFY), "Round time max" )
+
 GM.RoundStage = 0
 GM.RoundCount = 0
 if GAMEMODE then
@@ -38,6 +40,11 @@ function GM:NetworkRound(ply)
 		net.WriteUInt(self.RoundSettings.ShowSpectateInfo and 1 or 0, 8)
 	else
 		net.WriteUInt(0, 8)
+	end
+	
+	if self.RoundStage == 1 then
+		net.WriteDouble(self.RoundStartTime)
+		net.WriteUInt(math.max(self.RoundTimeMax:GetInt(), 0), 32)
 	end
 
 	if ply == nil then
@@ -126,6 +133,12 @@ function GM:RoundCheckForWin()
 
 	// is the murderer dead?
 	if !murderer:Alive() then
+		self:EndTheRound(2, murderer)
+		return
+	end
+	
+	// round time ended
+	if self.RoundStartTime + math.max(self.RoundTimeMax:GetInt(), 0) < CurTime() then
 		self:EndTheRound(2, murderer)
 		return
 	end
@@ -263,8 +276,9 @@ function GM:StartNewRound()
 	ct:Add(translate.roundStarted)
 	ct:SendAll()
 
-	self:SetRound(1)
 	self.RoundUnFreezePlayers = CurTime() + 10
+	self.RoundStartTime = self.RoundUnFreezePlayers
+	self:SetRound(1)
 
 	local players = team.GetPlayers(2)
 	for k,ply in pairs(players) do
