@@ -52,6 +52,11 @@ surface.CreateFont( "RoundTimer" , {
 	size = math.ceil(ScrW() / 60),
 })
 
+surface.CreateFont( "SpecialRound" , {
+	font = "coolvetica",
+	size = math.ceil(ScrW() / 60),
+})
+
 local function drawTextShadow(t,f,x,y,c,px,py)
 	color_black.a = c.a
 	draw.SimpleText(t,f,x + 1,y + 1,color_black,px,py)
@@ -118,41 +123,71 @@ function GM:HUDPaint()
 		
 		draw.SimpleText(text, "RoundTimer", 15, 15, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 	end
+	
+	if self.SpecialRoundStage == 0 then
+		local text = Translator:VarTranslate(translate.specialRoundCountdown, {
+			countdown = self.SpecialRoundCountdown
+		})
+		draw.SimpleText(text, "SpecialRound", ScrW() - 15, 15, Color(255, 255, 255, 255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
+	elseif self.SpecialRoundStage > 0 then
+		local text = Translator:VarTranslate(translate.specialRound, {
+			name = translate["specialRoundName" .. self.SpecialRoundStage]
+		})
+		draw.SimpleText(text, "SpecialRound", ScrW() - 15, 15, Color(255, 255, 255, 255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
+	end
 end
 
 function GM:DrawStartRoundInformation()
-	local client = LocalPlayer()
-	local t1 = translate.startHelpBystanderTitle
-	local t2 = nil
-	local c = Color(20,120,255)
-	local desc = translate.table.startHelpBystander
+	if self.SpecialRoundStage == 0 then
+		local client = LocalPlayer()
+		local t1 = translate.startHelpBystanderTitle
+		local t2 = nil
+		local c = Color(20,120,255)
+		local desc = translate.table.startHelpBystander
 
-	if self:GetAmMurderer() then
-		t1 = translate.startHelpMurdererTitle
-		desc = translate.table.startHelpMurderer
-		c = Color(190, 20, 20)
-	end
-
-	local hasMagnum = false
-	for k, wep in pairs(client:GetWeapons()) do
-		if wep:GetClass() == "weapon_mu_magnum" then
-			hasMagnum = true
-			break
+		if self:GetAmMurderer() then
+			t1 = translate.startHelpMurdererTitle
+			desc = translate.table.startHelpMurderer
+			c = Color(190, 20, 20)
 		end
-	end
-	if hasMagnum then
-		t1 = translate.startHelpGunTitle
-		t2 = translate.startHelpGunSubtitle
-		desc = translate.table.startHelpGun
-	end
 
-	drawTextShadow(t1, "MersRadial", ScrW() / 2, ScrH()  * 0.25, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	if t2 then
-		local h = draw.GetFontHeight("MersRadial")
-		drawTextShadow(t2, "MersRadialSmall", ScrW() / 2, ScrH() * 0.25 + h * 0.7, Color(120, 70, 245), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	end
+		local hasMagnum = false
+		for k, wep in pairs(client:GetWeapons()) do
+			if wep:GetClass() == "weapon_mu_magnum" then
+				hasMagnum = true
+				break
+			end
+		end
+		if hasMagnum then
+			t1 = translate.startHelpGunTitle
+			t2 = translate.startHelpGunSubtitle
+			desc = translate.table.startHelpGun
+		end
 
-	if desc then
+		drawTextShadow(t1, "MersRadial", ScrW() / 2, ScrH()  * 0.25, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		if t2 then
+			local h = draw.GetFontHeight("MersRadial")
+			drawTextShadow(t2, "MersRadialSmall", ScrW() / 2, ScrH() * 0.25 + h * 0.7, Color(120, 70, 245), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		if desc then
+			local fontHeight = draw.GetFontHeight("MersRadialSmall")
+			for k,v in pairs(desc) do
+				drawTextShadow(v, "MersRadialSmall", ScrW() / 2, ScrH() * 0.75 + (k - 1) * fontHeight, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			end
+		end
+	elseif self.SpecialRoundStage == 1 then
+		local c = Color(190, 20, 20)
+		drawTextShadow(translate["specialRoundName" .. self.SpecialRoundStage], "MersRadial", ScrW() / 2, ScrH()  * 0.25, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local desc = translate.table["specialRoundStartHelp" .. self.SpecialRoundStage]
+		local fontHeight = draw.GetFontHeight("MersRadialSmall")
+		for k,v in pairs(desc) do
+			drawTextShadow(v, "MersRadialSmall", ScrW() / 2, ScrH() * 0.75 + (k - 1) * fontHeight, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+	elseif self.SpecialRoundStage == 2 then
+		local c = Color(20, 120, 255)
+		drawTextShadow(translate["specialRoundName" .. self.SpecialRoundStage], "MersRadial", ScrW() / 2, ScrH()  * 0.25, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local desc = translate.table["specialRoundStartHelp" .. self.SpecialRoundStage]
 		local fontHeight = draw.GetFontHeight("MersRadialSmall")
 		for k,v in pairs(desc) do
 			drawTextShadow(v, "MersRadialSmall", ScrW() / 2, ScrH() * 0.75 + (k - 1) * fontHeight, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

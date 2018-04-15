@@ -113,3 +113,16 @@ pt.ttt_tbut_help    = "Appuyez sur {key} pour l'activer"
 
 pt.tryTeamKill = "{player} est mort pour avoir essayé de tuer un innocent"
 pt.roundTimeLeft = "Temps restant: {time}"
+pt.specialRoundCountdown = "{countdown} manche(s) restantes avant la manche spéciale"
+pt.specialRound = "Manche spéciale: {name}"
+pt.specialRoundName1 = "Mélée générale couteau"
+pt.specialRoundStartHelp1 = {
+	"Tout le monde est meurtrier",
+	"Lancez votre couteau pour tuer quelqu'un",
+	"Soyez le dernier survivant pour gagner"
+}
+pt.specialRoundName2 = "Mélée générale pistolet"
+pt.specialRoundStartHelp2 = {
+	"Tout le monde a un pistolet",
+	"Soyez le dernier survivant pour gagner"
+}

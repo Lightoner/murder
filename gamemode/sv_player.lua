@@ -288,18 +288,20 @@ function GM:PlayerDeath(ply, Inflictor, attacker )
 			end
 		end
 	else
-		if attacker != ply && IsValid(attacker) && attacker:IsPlayer() then
-			local col = attacker:GetPlayerColor()
-			local msgs = Translator:AdvVarTranslate(translate.killedMurderer, {
-				player = {text = attacker:Nick() .. ", " .. attacker:GetBystanderName(), color = Color(col.x * 255, col.y * 255, col.z * 255)}
-			})
-			local ct = ChatText()
-			ct:AddParts(msgs)
-			ct:SendAll()
-		else
-			local ct = ChatText()
-			ct:Add(translate.murdererDeathUnknown)
-			ct:SendAll()
+		if self.SpecialRoundStage != 1 then
+			if attacker != ply && IsValid(attacker) && attacker:IsPlayer() then
+				local col = attacker:GetPlayerColor()
+				local msgs = Translator:AdvVarTranslate(translate.killedMurderer, {
+					player = {text = attacker:Nick() .. ", " .. attacker:GetBystanderName(), color = Color(col.x * 255, col.y * 255, col.z * 255)}
+				})
+				local ct = ChatText()
+				ct:AddParts(msgs)
+				ct:SendAll()
+			else
+				local ct = ChatText()
+				ct:Add(translate.murdererDeathUnknown)
+				ct:SendAll()
+			end
 		end
 	end
 

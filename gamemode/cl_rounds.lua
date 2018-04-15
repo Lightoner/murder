@@ -37,6 +37,9 @@ net.Receive("SetRound", function (length)
 		GAMEMODE.RoundStartTime = net.ReadDouble()
 		GAMEMODE.RoundTimeMax = net.ReadUInt(32)
 	end
+	
+	GAMEMODE.SpecialRoundCountdown = net.ReadUInt(32)
+	GAMEMODE.SpecialRoundStage = net.ReadUInt(8)
 end)
 
 net.Receive("DeclareWinner" , function (length)

@@ -135,7 +135,7 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		return true
 	end
 	
-	if IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetAttacker()) && dmginfo:GetAttacker():IsPlayer() && !ent:GetMurderer() && !dmginfo:GetAttacker():GetMurderer() then
+	if IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetAttacker()) && dmginfo:GetAttacker():IsPlayer() && !ent:GetMurderer() && !dmginfo:GetAttacker():GetMurderer() && self.SpecialRoundStage != 2 then
 		dmginfo:GetAttacker():Kill()
 		local col = dmginfo:GetAttacker():GetPlayerColor()
 		local msgs = Translator:AdvVarTranslate(translate.tryTeamKill, {
@@ -146,7 +146,10 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		ct:SendAll()
 		return true
 	end
-
+	
+	if self.SpecialRoundStage == 1 && IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():IsWeapon() && dmginfo:GetInflictor():GetClass() == "weapon_mu_knife" then
+		return true
+	end
 
 end
 

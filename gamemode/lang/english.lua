@@ -113,3 +113,16 @@ pt.ttt_tbut_help    = "Press {key} to activate"
 
 pt.tryTeamKill = "{player} died for trying to kill an innocent"
 pt.roundTimeLeft = "Time left: {time}"
+pt.specialRoundCountdown = "{countdown} round(s) left before special round"
+pt.specialRound = "Special round: {name}"
+pt.specialRoundName1 = "Free for all cut"
+pt.specialRoundStartHelp1 = {
+	"Everyone is murderer",
+	"Throw your cut to kill someone",
+	"Be the last survivor to win"
+}
+pt.specialRoundName2 = "Free for all gun"
+pt.specialRoundStartHelp2 = {
+	"Everyone has a gun",
+	"Be the last survivor to win"
+}

@@ -33,6 +33,7 @@ Convars
 	mu_moveafktospectator <0/1> - Should we move AFK players to spectator on round end
 	mu_roundlimit <number> - Number of rounds we should play before map change
 	mu_round_time_max <number> - Round time max
+	mu_special_round_countdown_start <number> - Special round countdown start
 	
 
 
