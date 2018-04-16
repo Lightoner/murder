@@ -1,6 +1,12 @@
 local PlayerMeta = FindMetaTable("Player")
 local EntityMeta = FindMetaTable("Entity")
 
+function GM:PlayerFootstep(ply, pos, foot, sound, volume, filter)
+	if ply:KeyDown(IN_WALK) and !ply:KeyDown(IN_SPEED) then
+		return true
+	end
+end
+
 function EntityMeta:GetPlayerColor()
 	return self:GetNWVector("playerColor") or Vector()
 end
