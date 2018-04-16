@@ -147,7 +147,7 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		return true
 	end
 	
-	if self.SpecialRoundStage == 1 && IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():IsWeapon() && dmginfo:GetInflictor():GetClass() == "weapon_mu_knife" then
+	if self.SpecialRoundStage == 1 && IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():IsWeapon() && dmginfo:GetInflictor():GetClass() == "weapon_mu_knife" then
 		return true
 	end
 
