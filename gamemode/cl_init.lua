@@ -15,12 +15,8 @@ include("cl_qmenu.lua")
 include("cl_spectate.lua")
 include("cl_adminpanel.lua")
 include("cl_flashlight.lua")
-include("cl_halos.lua")
 
 GM.Debug = CreateClientConVar( "mu_debug", 0, true, true )
-GM.HaloRender = CreateClientConVar( "mu_halo_render", 1, true, true ) // should we render halos
-GM.HaloRenderLoot = CreateClientConVar( "mu_halo_loot", 1, true, true ) // shouuld we render loot halos
-GM.HaloRenderKnife = CreateClientConVar( "mu_halo_knife", 1, true, true ) // shouuld we render murderer's knife halos
 
 function GM:Initialize() 
 
@@ -76,6 +72,36 @@ function GM:Think()
 			self.FogEmitters[ply] = nil
 		end
 	end
+	
+	//entity color
+	for k, v in pairs(ents.FindByClass("weapon_mu_magnum")) do
+		if IsValid(v) then
+			local col = v:GetColor()
+			if !IsValid(v.Owner) then
+				local colBlue = Color(0, 0, 255, 255)
+				if col != colBlue then
+					v:SetMaterial("models/wireframe")
+					v:SetColor(colBlue)
+				end
+			else
+				local colWhite = Color(255, 255, 255, 255)
+				if col != colWhite then
+					v:SetMaterial("")
+					v:SetColor(colWhite)
+				end
+			end
+		end
+	end
+	for k, v in pairs(ents.FindByClass("mu_loot")) do
+		if IsValid(v) then
+			local col = v:GetColor()
+			local colGreen = Color(0, 255, 0, 255)
+			if col != colGreen then
+				v:SetMaterial("models/wireframe")
+				v:SetColor(colGreen)
+			end
+		end
+	end
 end
 
 
@@ -100,36 +126,4 @@ end
 
 function GM:PostDrawTranslucentRenderables()
 
-end
-
-function GM:PreDrawMurderHalos(Add)
-	local client = LocalPlayer()
-
-	if IsValid(client) && client:Alive() && self.HaloRender:GetBool() then
-		local halos = {}
-		if self.HaloRenderLoot:GetBool() then
-			for k, v in pairs(ents.FindByClass("weapon_mu_magnum")) do
-				if !IsValid(v.Owner) then
-					table.insert(halos, {ent = v, color = 3})
-				end
-			end
-			for k, v in pairs(ents.FindByClass("mu_loot")) do
-				table.insert(halos, {ent = v, color = 1})
-			end
-		end
-
-		if self:GetAmMurderer() && self.HaloRenderKnife:GetBool() then
-			for k, v in pairs(ents.FindByClass("weapon_mu_knife")) do
-				if !IsValid(v.Owner) then
-					table.insert(halos, {ent = v, color = 2})
-				end
-			end
-			for k, v in pairs(ents.FindByClass("mu_knife")) do
-				table.insert(halos, {ent = v, color = 2})
-			end
-		end
-		if #halos > 0 then
-			Add(halos, {Color(0, 220, 0), Color(220, 0, 0), Color(0, 0, 255)}, 5, 5, 5, true, false)
-		end
-	end
 end
