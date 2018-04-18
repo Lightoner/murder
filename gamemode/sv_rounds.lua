@@ -158,7 +158,10 @@ function GM:RoundCheckForWin()
 		end
 		if #survivors == 1 then 
 			self:EndTheRound(1, survivors[1])
-			return 
+			return
+		elseif #survivors == 0 then
+			self:EndTheRound(3, nil)
+			return
 		end
 	elseif self.SpecialRoundStage == 2 then
 		local survivors = {}
@@ -167,9 +170,12 @@ function GM:RoundCheckForWin()
 				table.insert(survivors, v)
 			end
 		end
-		if #survivors == 1 then 
+		if #survivors == 1 then
 			self:EndTheRound(2, survivors[1])
-			return 
+			return
+		elseif #survivors == 0 then
+			self:EndTheRound(3, nil)
+			return
 		end
 	end
 	
