@@ -157,14 +157,8 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
 	ply:AddDeaths( 1 )
 
-	if ( attacker:IsValid() && attacker:IsPlayer() ) then
-
-		if ( attacker == ply ) then
-			attacker:AddFrags( -1 )
-		else
-			attacker:AddFrags( 1 )
-		end
-
+	if ( IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "mu_knife" && IsValid(ply:GetActiveWeapon()) && ply:GetActiveWeapon():GetClass() == "weapon_mu_magnum" ) then
+		attacker:AddFrags( 1 )
 	end
 
 end
