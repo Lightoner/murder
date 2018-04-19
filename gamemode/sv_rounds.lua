@@ -48,7 +48,7 @@ function GM:NetworkRound(ply)
 	
 	if self.RoundStage == 1 then
 		net.WriteDouble(self.RoundStartTime)
-		net.WriteUInt(math.max(self.RoundTimeMax:GetInt(), 0), 32)
+		net.WriteUInt(self.CurrentRoundTimeMax, 32)
 	end
 	
 	net.WriteUInt(self.SpecialRoundCountdown, 32)
@@ -180,7 +180,7 @@ function GM:RoundCheckForWin()
 	end
 	
 	// round time ended
-	if self.RoundStartTime + math.max(self.RoundTimeMax:GetInt(), 0) < CurTime() then
+	if self.RoundStartTime + self.CurrentRoundTimeMax < CurTime() then
 		self:EndTheRound(2, murderer)
 		return
 	end
@@ -322,6 +322,7 @@ function GM:StartNewRound()
 
 	self.RoundUnFreezePlayers = CurTime() + 10
 	self.RoundStartTime = self.RoundUnFreezePlayers
+	self.CurrentRoundTimeMax = math.max(self.RoundTimeMax:GetInt(), 0)
 	if self.SpecialRoundCountdown == 0 then
 		self.SpecialRoundStage = math.random(1, 2)
 		self.SpecialRoundCountdown = math.max(self.SpecialRoundCountdownStart:GetInt(), 0)
@@ -473,6 +474,33 @@ concommand.Add("mu_forcenextmurderer", function (ply, com, args)
 	local ct = ChatText()
 	ct:AddParts(msgs)
 	ct:Send(ply)
+end)
+
+concommand.Add("mu_round_time", function (ply, com, args)
+	if IsValid(ply) && !ply:IsAdmin() then return end
+	if #args < 1 then return end
+	
+	local argInt = tonumber(args[1])
+	if argInt == nil then return end
+	
+	if GAMEMODE.RoundStage != 1 then return end
+	
+	GAMEMODE.RoundStartTime = CurTime()
+	GAMEMODE.CurrentRoundTimeMax = math.max(argInt, 0)
+	
+	GAMEMODE:NetworkRound()
+end)
+
+concommand.Add("mu_special_round_countdown", function (ply, com, args)
+	if IsValid(ply) && !ply:IsAdmin() then return end
+	if #args < 1 then return end
+	
+	local argInt = tonumber(args[1])
+	if argInt == nil then return end
+	
+	GAMEMODE.SpecialRoundCountdown = math.max(argInt, 0)
+	
+	GAMEMODE:NetworkRound()
 end)
 
 function GM:ChangeMap()

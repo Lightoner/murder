@@ -15,7 +15,6 @@ end
 net.Receive("SetRound", function (length)
 	local r = net.ReadUInt(8)
 	local start = net.ReadDouble()
-	GAMEMODE.RoundStage = r
 	GAMEMODE.RoundStart = start
 
 	GAMEMODE.RoundSettings = {}
@@ -27,16 +26,19 @@ net.Receive("SetRound", function (length)
 	end
 
 	if r == 1 then
-		timer.Simple(0.2, function ()
-			local pitch = math.random(70, 140)
-			if IsValid(LocalPlayer()) then
-				LocalPlayer():EmitSound("ambient/creatures/town_child_scream1.wav", 100, pitch)
-			end
-		end)
-		GAMEMODE.LootCollected = 0
+		if GAMEMODE.RoundStage != 1 then
+			timer.Simple(0.2, function ()
+				local pitch = math.random(70, 140)
+				if IsValid(LocalPlayer()) then
+					LocalPlayer():EmitSound("ambient/creatures/town_child_scream1.wav", 100, pitch)
+				end
+			end)
+			GAMEMODE.LootCollected = 0
+		end
 		GAMEMODE.RoundStartTime = net.ReadDouble()
 		GAMEMODE.RoundTimeMax = net.ReadUInt(32)
 	end
+	GAMEMODE.RoundStage = r
 	
 	GAMEMODE.SpecialRoundCountdown = net.ReadUInt(32)
 	GAMEMODE.SpecialRoundStage = net.ReadUInt(8)
