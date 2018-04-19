@@ -149,6 +149,12 @@ function GM:RoundCheckForWin()
 			self:EndTheRound(2, murderer)
 			return
 		end
+		
+		// round time ended
+		if self.RoundStartTime + self.CurrentRoundTimeMax < CurTime() then
+			self:EndTheRound(2, murderer)
+			return
+		end
 	elseif self.SpecialRoundStage == 1 then
 		local survivors = {}
 		for k,v in pairs(players) do
@@ -160,6 +166,12 @@ function GM:RoundCheckForWin()
 			self:EndTheRound(1, survivors[1])
 			return
 		elseif #survivors == 0 then
+			self:EndTheRound(3, nil)
+			return
+		end
+		
+		// round time ended
+		if self.RoundStartTime + self.CurrentRoundTimeMax < CurTime() then
 			self:EndTheRound(3, nil)
 			return
 		end
@@ -177,12 +189,12 @@ function GM:RoundCheckForWin()
 			self:EndTheRound(3, nil)
 			return
 		end
-	end
-	
-	// round time ended
-	if self.RoundStartTime + self.CurrentRoundTimeMax < CurTime() then
-		self:EndTheRound(2, murderer)
-		return
+		
+		// round time ended
+		if self.RoundStartTime + self.CurrentRoundTimeMax < CurTime() then
+			self:EndTheRound(3, nil)
+			return
+		end
 	end
 
 	// keep playing.
