@@ -115,10 +115,10 @@ pt.tryTeamKill = "{player} died for trying to kill an innocent"
 pt.roundTimeLeft = "Time left: {time}"
 pt.specialRoundCountdown = "{countdown} round(s) left before special round"
 pt.specialRound = "Special round: {name}"
-pt.specialRoundName1 = "Free for all cut"
+pt.specialRoundName1 = "Free for all knife"
 pt.specialRoundStartHelp1 = {
 	"Everyone is murderer",
-	"Throw your cut to kill someone",
+	"Throw your knife to kill someone",
 	"Be the last survivor to win"
 }
 pt.specialRoundName2 = "Free for all gun"
