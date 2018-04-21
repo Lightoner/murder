@@ -4,6 +4,7 @@ util.AddNetworkString("DeclareWinner")
 
 GM.RoundTimeMax = CreateConVar("mu_round_time_max", 600, bit.bor(FCVAR_NOTIFY), "Round time max" )
 GM.SpecialRoundCountdownStart = CreateConVar("mu_special_round_countdown_start", 4, bit.bor(FCVAR_NOTIFY), "Special round countdown start" )
+GM.SpawnProtection = CreateConVar("mu_spawn_protection", 10, bit.bor(FCVAR_NOTIFY), "Spawn protection" )
 
 GM.RoundStage = 0
 GM.RoundCount = 0
@@ -49,6 +50,7 @@ function GM:NetworkRound(ply)
 	if self.RoundStage == 1 then
 		net.WriteDouble(self.RoundStartTime)
 		net.WriteUInt(self.CurrentRoundTimeMax, 32)
+		net.WriteUInt(self.CurrentSpawnProtection, 32)
 	end
 	
 	net.WriteUInt(self.SpecialRoundCountdown, 32)
@@ -72,6 +74,14 @@ function GM:RoundThink()
 			self:StartNewRound()
 		end
 	elseif self.RoundStage == 1 then
+		if self.RoundStartTime + self.CurrentSpawnProtection < CurTime() then
+			for k, ply in pairs(players) do
+				if ply:GetMaterial() == "models/wireframe" then
+					ply:SetMaterial("")
+				end
+			end
+		end
+	
 		if !self.RoundLastDeath || self.RoundLastDeath < CurTime() then
 			self:RoundCheckForWin()
 		end
@@ -215,6 +225,13 @@ function GM:EndTheRound(reason, murderer)
 	if self.RoundStage != 1 then return end
 
 	local players = team.GetPlayers(2)
+	
+	for k, ply in pairs(players) do
+		if ply:GetMaterial() == "models/wireframe" then
+			ply:SetMaterial("")
+		end
+	end
+	
 	for k, ply in pairs(players) do
 		ply:SetMurdererRevealed(false)
 		ply:UnMurdererDisguise()
@@ -335,6 +352,7 @@ function GM:StartNewRound()
 	self.RoundUnFreezePlayers = CurTime() + 10
 	self.RoundStartTime = self.RoundUnFreezePlayers
 	self.CurrentRoundTimeMax = math.max(self.RoundTimeMax:GetInt(), 0)
+	self.CurrentSpawnProtection = math.max(self.SpawnProtection:GetInt(), 0)
 	if self.SpecialRoundCountdown == 0 then
 		self.SpecialRoundStage = math.random(1, 2)
 		self.SpecialRoundCountdown = math.max(self.SpecialRoundCountdownStart:GetInt(), 0)
@@ -453,11 +471,19 @@ function GM:StartNewRound()
 	end
 
 	self.MurdererLastKill = CurTime()
+	
+	for k, ply in pairs(players) do
+		ply:SetMaterial("models/wireframe")
+	end
 
 	hook.Call("OnStartRound")
 end
 
 function GM:PlayerLeavePlay(ply)
+	if ply:GetMaterial() == "models/wireframe" then
+		ply:SetMaterial("")
+	end
+
 	if ply:HasWeapon("weapon_mu_magnum") then
 		ply:DropWeapon(ply:GetWeapon("weapon_mu_magnum"))
 	end

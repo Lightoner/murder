@@ -135,6 +135,10 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		return true
 	end
 	
+	if self.RoundStage == 1 && IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetAttacker()) && dmginfo:GetAttacker():IsPlayer() && (self.RoundStartTime + self.CurrentSpawnProtection >= CurTime()) then
+		return true
+	end
+	
 	if IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetAttacker()) && dmginfo:GetAttacker():IsPlayer() && !ent:GetMurderer() && !dmginfo:GetAttacker():GetMurderer() && self.SpecialRoundStage != 2 then
 		dmginfo:GetAttacker():Kill()
 		local col = dmginfo:GetAttacker():GetPlayerColor()

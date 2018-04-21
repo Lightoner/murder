@@ -57,6 +57,11 @@ surface.CreateFont( "SpecialRound" , {
 	size = math.ceil(ScrW() / 60),
 })
 
+surface.CreateFont( "SpawnProtection" , {
+	font = "coolvetica",
+	size = math.ceil(ScrW() / 60),
+})
+
 local function drawTextShadow(t,f,x,y,c,px,py)
 	color_black.a = c.a
 	draw.SimpleText(t,f,x + 1,y + 1,color_black,px,py)
@@ -106,22 +111,33 @@ function GM:HUDPaint()
 	self:DrawRadialMenu()
 	
 	if self.RoundStage == 1 then
-		local TimeLeft = math.floor(math.max((self.RoundStartTime + self.RoundTimeMax) - CurTime(), 0))
-		local seconds = TimeLeft % 60
-		local SecondsText
-		if seconds < 10 then
-			SecondsText = "0" .. seconds
-		else
-			SecondsText = seconds
+		local TimeLeft = math.floor((self.RoundStartTime + self.RoundTimeMax) - CurTime())
+		if TimeLeft >= 0 then
+			local seconds = TimeLeft % 60
+			local SecondsText
+			if seconds < 10 then
+				SecondsText = "0" .. seconds
+			else
+				SecondsText = seconds
+			end
+			local minutes = math.floor(TimeLeft / 60)
+			local TimerText = minutes .. ":" .. SecondsText
+			
+			local text = Translator:VarTranslate(translate.roundTimeLeft, {
+				time = TimerText
+			})
+			
+			draw.SimpleText(text, "RoundTimer", 15, 15, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 		end
-		local minutes = math.floor(TimeLeft / 60)
-		local TimerText = minutes .. ":" .. SecondsText
 		
-		local text = Translator:VarTranslate(translate.roundTimeLeft, {
-			time = TimerText
-		})
-		
-		draw.SimpleText(text, "RoundTimer", 15, 15, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+		local SpawnProtectionLeft = math.floor((self.RoundStartTime + self.SpawnProtection) - CurTime())
+		if SpawnProtectionLeft >= 0 then
+			local text = Translator:VarTranslate(translate.spawnProtection, {
+				seconds = SpawnProtectionLeft
+			})
+			
+			draw.SimpleText(text, "SpawnProtection", ScrW() / 2, 15, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
 	end
 	
 	if self.SpecialRoundStage == 0 then

@@ -257,6 +257,9 @@ function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 end
 
 function GM:PlayerDeath(ply, Inflictor, attacker )
+	if ply:GetMaterial() == "models/wireframe" then
+		ply:SetMaterial("")
+	end
 
 	self:DoRoundDeaths(ply, attacker)
 

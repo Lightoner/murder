@@ -126,3 +126,4 @@ pt.specialRoundStartHelp2 = {
 	"Tout le monde a un pistolet",
 	"Soyez le dernier survivant pour gagner"
 }
+pt.spawnProtection = "Spawn protection: {seconds}"

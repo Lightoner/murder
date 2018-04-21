@@ -37,6 +37,7 @@ net.Receive("SetRound", function (length)
 		end
 		GAMEMODE.RoundStartTime = net.ReadDouble()
 		GAMEMODE.RoundTimeMax = net.ReadUInt(32)
+		GAMEMODE.SpawnProtection = net.ReadUInt(32)
 	end
 	GAMEMODE.RoundStage = r
 	
