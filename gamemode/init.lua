@@ -32,8 +32,6 @@ include("sv_bystandername.lua")
 include("sv_adminpanel.lua")
 include("sv_flashlight.lua")
 
-resource.AddFile("materials/murder/melon_logo_scoreboard.png")
-
 GM.MurdererFogTime = CreateConVar("mu_murderer_fogtime", 60 * 4, bit.bor(FCVAR_NOTIFY), "Time (in seconds) it takes for a Murderer to show fog for no kills, 0 to disable" )
 GM.LocalChat = CreateConVar("mu_localchat", 0, bit.bor(FCVAR_NOTIFY), "Local chat, when enabled only nearby players can hear other players" )
 GM.LocalChatRange = CreateConVar("mu_localchat_range", 550, bit.bor(FCVAR_NOTIFY), "The range at which you can hear other players" )
