@@ -138,6 +138,12 @@ end
 
 function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
+	ply:AddDeaths( 1 )
+
+	if ( IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "mu_knife" && IsValid(ply:GetActiveWeapon()) && ply:GetActiveWeapon():GetClass() == "weapon_mu_magnum" ) then
+		attacker:AddFrags( 1 )
+	end
+
 	for k, weapon in pairs(ply:GetWeapons()) do
 		if weapon:GetClass() == "weapon_mu_magnum" then
 			ply:DropWeapon(weapon)
@@ -153,12 +159,6 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 	if IsValid(ent) then
 		ply:CSpectate(OBS_MODE_CHASE, ent)
 		ent:SetBystanderName(ply:GetBystanderName())
-	end
-
-	ply:AddDeaths( 1 )
-
-	if ( IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "mu_knife" && IsValid(ply:GetActiveWeapon()) && ply:GetActiveWeapon():GetClass() == "weapon_mu_magnum" ) then
-		attacker:AddFrags( 1 )
 	end
 
 end
