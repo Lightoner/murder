@@ -10,6 +10,7 @@ GM.RoundStage = 0
 GM.RoundCount = 0
 GM.SpecialRoundCountdown = math.max(GM.SpecialRoundCountdownStart:GetInt(), 0)
 GM.SpecialRoundStage = 0
+GM.SpawnProtectionActive = false
 if GAMEMODE then
 	GM.RoundStage = GAMEMODE.RoundStage
 	GM.RoundCount = GAMEMODE.RoundCount
@@ -50,6 +51,7 @@ function GM:NetworkRound(ply)
 	if self.RoundStage == 1 then
 		net.WriteDouble(self.RoundStartTime)
 		net.WriteUInt(self.CurrentRoundTimeMax, 32)
+		net.WriteDouble(self.SpawnProtectionStartTime)
 		net.WriteUInt(self.CurrentSpawnProtection, 32)
 	end
 	
@@ -74,12 +76,13 @@ function GM:RoundThink()
 			self:StartNewRound()
 		end
 	elseif self.RoundStage == 1 then
-		if self.RoundStartTime + self.CurrentSpawnProtection < CurTime() then
+		if self.SpawnProtectionActive == true && self.SpawnProtectionStartTime + self.CurrentSpawnProtection < CurTime() then
 			for k, ply in pairs(players) do
 				if ply:GetMaterial() == "models/wireframe" then
 					ply:SetMaterial("")
 				end
 			end
+			self.SpawnProtectionActive = false
 		end
 	
 		if !self.RoundLastDeath || self.RoundLastDeath < CurTime() then
@@ -231,6 +234,7 @@ function GM:EndTheRound(reason, murderer)
 			ply:SetMaterial("")
 		end
 	end
+	self.SpawnProtectionActive = false
 	
 	for k, ply in pairs(players) do
 		ply:SetMurdererRevealed(false)
@@ -351,8 +355,10 @@ function GM:StartNewRound()
 
 	self.RoundUnFreezePlayers = CurTime() + 10
 	self.RoundStartTime = self.RoundUnFreezePlayers
+	self.SpawnProtectionStartTime = self.RoundUnFreezePlayers
 	self.CurrentRoundTimeMax = math.max(self.RoundTimeMax:GetInt(), 0)
 	self.CurrentSpawnProtection = math.max(self.SpawnProtection:GetInt(), 0)
+	self.SpawnProtectionActive = true
 	if self.SpecialRoundCountdown == 0 then
 		self.SpecialRoundStage = math.random(1, 2)
 		self.SpecialRoundCountdown = math.max(self.SpecialRoundCountdownStart:GetInt(), 0)

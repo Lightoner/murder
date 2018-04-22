@@ -133,7 +133,7 @@ function GM:EntityTakeDamage( ent, dmginfo )
 		return true
 	end
 	
-	if self.RoundStage == 1 && IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetAttacker()) && dmginfo:GetAttacker():IsPlayer() && (self.RoundStartTime + self.CurrentSpawnProtection >= CurTime()) then
+	if self.RoundStage == 1 && self.SpawnProtectionActive == true && IsValid(ent) && ent:IsPlayer() && IsValid(dmginfo:GetAttacker()) && dmginfo:GetAttacker():IsPlayer() then
 		return true
 	end
 	

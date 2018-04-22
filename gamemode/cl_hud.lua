@@ -130,7 +130,7 @@ function GM:HUDPaint()
 			draw.SimpleText(text, "RoundTimer", 15, 15, Color(255, 255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 		end
 		
-		local SpawnProtectionLeft = math.floor((self.RoundStartTime + self.SpawnProtection) - CurTime())
+		local SpawnProtectionLeft = math.floor((self.SpawnProtectionStartTime + self.SpawnProtection) - CurTime())
 		if SpawnProtectionLeft >= 0 then
 			local text = Translator:VarTranslate(translate.spawnProtection, {
 				seconds = SpawnProtectionLeft
