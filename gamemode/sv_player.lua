@@ -41,45 +41,29 @@ function GM:PlayerSpawn( ply )
 
 	ply:SetFlashlightCharge(1)
 
-	player_manager.OnPlayerSpawn( ply )
-	player_manager.RunClass( ply, "Spawn" )
-
 	hook.Call( "PlayerLoadout", GAMEMODE, ply )
 	hook.Call( "PlayerSetModel", GAMEMODE, ply )
 
 	ply:CalculateSpeed()
-
-	local oldhands = ply:GetHands()
-	if ( IsValid( oldhands ) ) then oldhands:Remove() end
-
-	local hands = ents.Create( "gmod_hands" )
-	if ( IsValid( hands ) ) then
-		ply:SetHands( hands )
-		hands:SetOwner( ply )
-
-		-- Which hands should we use?
-		local cl_playermodel = ply:GetInfo( "cl_playermodel" )
-		local info = player_manager.TranslatePlayerHands( cl_playermodel )
-		if ( info ) then
-			hands:SetModel( info.model )
-			hands:SetSkin( info.skin )
-			hands:SetBodyGroups( info.body )
-		end
-
-		-- Attach them to the viewmodel
-		local vm = ply:GetViewModel( 0 )
-		hands:AttachToViewmodel( vm )
-
-		vm:DeleteOnRemove( hands )
-		ply:DeleteOnRemove( hands )
-
-		hands:Spawn()
-	end
+	
+	ply:SetupHands()
 
 	local spawnPoint = self:PlayerSelectTeamSpawn(ply:Team(), ply)
 	if IsValid(spawnPoint) then
 		ply:SetPos(spawnPoint:GetPos())
 	end
+end
+
+function GM:PlayerSetHandsModel( ply, ent )
+
+	local simplemodel = player_manager.TranslateToPlayerModelName( ply:GetModel() )
+	local info = player_manager.TranslatePlayerHands( simplemodel )
+	if ( info ) then
+		ent:SetModel( info.model )
+		ent:SetSkin( info.skin )
+		ent:SetBodyGroups( info.body )
+	end
+
 end
 
 function GM:PlayerLoadout(ply)
