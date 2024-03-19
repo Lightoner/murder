@@ -47,6 +47,10 @@ function GM:NetworkRound(ply)
 	else
 		net.WriteUInt(0, 8)
 	end
+
+	if self.RoundStage == 5 then
+		net.WriteDouble(self.StartNewRoundTime)
+	end
 	
 	if self.RoundStage == 1 then
 		net.WriteDouble(self.RoundStartTime)
@@ -57,10 +61,6 @@ function GM:NetworkRound(ply)
 	
 	net.WriteUInt(self.SpecialRoundCountdown, 32)
 	net.WriteUInt(self.SpecialRoundStage, 8)
-
-	if self.RoundStage == 5 then
-		net.WriteDouble(self.StartNewRoundTime)
-	end
 
 	if ply == nil then
 		net.Broadcast()
