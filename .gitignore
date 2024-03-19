@@ -1,3 +1,4 @@
 # Sublime!
 *.sublime-project
 *.sublime-workspace
+.vscode
