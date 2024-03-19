@@ -373,7 +373,6 @@ function GM:StartNewRound()
 	else
 		self.SpecialRoundCountdown = self.SpecialRoundCountdown - 1
 	end
-	self:SetRound(1)
 
 	local players = team.GetPlayers(2)
 	for k,ply in pairs(players) do
