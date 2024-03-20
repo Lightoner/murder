@@ -31,7 +31,8 @@ pt.winMurderer = "Le meurtrier a gagné !"
 pt.winMurdererMurdererWas = " C'était {murderer}"
 
 pt.minimumPlayers = "Pas assez de joueurs pour commencer la partie"
-pt.waitingToStart = "En attendant de commencer le tour"
+pt.waitingToStart = "En attente du commencement de la partie"
+pt.roundStartsInTime = "La partie commence dans {seconds}"
 pt.roundStarted = "Une nouvelle partie a commencé"
 
 
