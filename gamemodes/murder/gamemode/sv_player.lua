@@ -41,6 +41,9 @@ function GM:PlayerSpawn( ply )
 
 	ply:SetFlashlightCharge(1)
 
+	player_manager.OnPlayerSpawn( ply )
+	player_manager.RunClass( ply, "Spawn" )
+
 	hook.Call( "PlayerLoadout", GAMEMODE, ply )
 	hook.Call( "PlayerSetModel", GAMEMODE, ply )
 
@@ -52,18 +55,6 @@ function GM:PlayerSpawn( ply )
 	if IsValid(spawnPoint) then
 		ply:SetPos(spawnPoint:GetPos())
 	end
-end
-
-function GM:PlayerSetHandsModel( ply, ent )
-
-	local simplemodel = player_manager.TranslateToPlayerModelName( ply:GetModel() )
-	local info = player_manager.TranslatePlayerHands( simplemodel )
-	if ( info ) then
-		ent:SetModel( info.model )
-		ent:SetSkin( info.skin )
-		ent:SetBodyGroups( info.body )
-	end
-
 end
 
 function GM:PlayerLoadout(ply)
