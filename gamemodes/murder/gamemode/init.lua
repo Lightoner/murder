@@ -104,6 +104,9 @@ function GM:Think()
 end
 
 function GM:AllowPlayerPickup( ply, ent )
+	if IsValid(ent) && (ent:GetClass() == "weapon_mu_magnum" || ent:GetClass() == "weapon_mu_knife") then
+		return false
+	end
 	return true
 end
 
