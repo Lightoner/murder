@@ -27,10 +27,6 @@ function ENT:Initialize()
 	self.HitSomething = false
 end
 
-function ENT:Use(ply)
-	self.RemoveNext = true
-end
-
 function ENT:Think()
 	if self.RemoveNext && IsValid(self) then
 		self.RemoveNext = false
