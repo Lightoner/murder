@@ -16,7 +16,6 @@ Loot
 	mu_loot_models_list - Lists all model aliases, these can be used instead of model filenames in mu_loot_add
 
 Misc
-	mu_taunt <category> - Plays a random taunt sound
 	mu_jointeam <team> - Trys to join the specified team
 	mu_print_players - Prints all the players, there bystander names and steam ids
 	mu_adminpanel - Brings up an admin panel where you can view information

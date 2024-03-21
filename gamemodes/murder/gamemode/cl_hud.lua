@@ -120,7 +120,6 @@ function GM:HUDPaint()
 		self:RenderSpectate()
 	end
 
-	self:DrawRadialMenu()
 	self:DrawSpawnsVisualise()
 	
 	if self.RoundStage == 1 then
@@ -461,8 +460,4 @@ function GM:HUDShouldDraw( name )
 	end
 
 	return true
-end
-
-function GM:GUIMousePressed(code, vector)
-	return self:RadialMousePressed(code,vector)
 end
