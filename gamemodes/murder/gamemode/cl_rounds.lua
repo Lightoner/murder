@@ -32,9 +32,11 @@ net.Receive("SetRound", function (length)
 	if r == GAMEMODE.Round.Playing then
 		if GAMEMODE.RoundStage != 1 then
 			timer.Simple(0.2, function ()
-				local pitch = math.random(70, 140)
 				if IsValid(LocalPlayer()) then
-					LocalPlayer():EmitSound("ambient/creatures/town_child_scream1.wav", 100, pitch)
+					LocalPlayer():EmitSound("ambient/water/drip1.wav", 100)
+				end
+				if !system.HasFocus() then
+					system.FlashWindow()
 				end
 			end)
 			GAMEMODE.LootCollected = 0
