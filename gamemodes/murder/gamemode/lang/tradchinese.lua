@@ -68,15 +68,6 @@ pt.adminPanel = "管理面板"
 
 pt.spectating = "旁觀中"
 
-pt.voiceHelp = "求救"
-pt.voiceHelpDescription = "喊救命"
-pt.voiceFunny = "搞笑"
-pt.voiceFunnyDescription = "說一個笑話"
-pt.voiceScream = "吶喊"
-pt.voiceScreamDescription = "像個小女孩"
-pt.voiceMorose = "鬱悶"
-pt.voiceMoroseDescription = "感到悲傷"
-
 
 pt.startHelpBystanderTitle = "您是旁觀者"
 pt.startHelpBystander = {

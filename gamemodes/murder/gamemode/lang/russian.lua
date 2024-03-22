@@ -77,15 +77,6 @@ pt.adminPanel = "Панель администратора"
 
 pt.spectating = "Наблюдение"
 
-pt.voiceHelp = "Помогите"
-pt.voiceHelpDescription = "Позвать на помощь"
-pt.voiceFunny = "Шутка"
-pt.voiceFunnyDescription = "Немного пошутить"
-pt.voiceScream = "Крик"
-pt.voiceScreamDescription = "Как маленькая девочка"
-pt.voiceMorose = "Мрачность"
-pt.voiceMoroseDescription = "Всё очень плохо"
-
 
 pt.startHelpBystanderTitle = "Вы свидетель"
 pt.startHelpBystander = {

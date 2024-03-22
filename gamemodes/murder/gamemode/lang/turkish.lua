@@ -69,15 +69,6 @@ pt.adminPanel = "Yönetici Paneli"
 
 pt.spectating = "İzleniyor"
 
-pt.voiceHelp = "Yardım"
-pt.voiceHelpDescription = "Yardım için bağır!"
-pt.voiceFunny = "Komik"
-pt.voiceFunnyDescription = "Biraz espiri"
-pt.voiceScream = "Çığlık"
-pt.voiceScreamDescription = "Küçük bir kız gibi."
-pt.voiceMorose = "Mutsuz"
-pt.voiceMoroseDescription = "Mutsuzluğu hisset."
-
 
 pt.startHelpBystanderTitle = "Sen bir masumsun."
 pt.startHelpBystander = {

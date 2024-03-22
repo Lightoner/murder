@@ -67,15 +67,6 @@ pt.adminPanel = "管理员面板"
 
 pt.spectating = "你正在观战中..."
 
-pt.voiceHelp = "求救"
-pt.voiceHelpDescription = "喊救命"
-pt.voiceFunny = "搞笑"
-pt.voiceFunnyDescription = "说一个笑话"
-pt.voiceScream = "呐喊"
-pt.voiceScreamDescription = "像个小女孩"
-pt.voiceMorose = "郁闷"
-pt.voiceMoroseDescription = "感到悲伤"
-
 pt.startHelpBystanderTitle = "你是旁观者"
 pt.startHelpBystander = {
 	"有一名凶手在逃",

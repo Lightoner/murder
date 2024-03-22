@@ -67,15 +67,6 @@ pt.adminPanel = "Pannello Admin"
 
 pt.spectating = "Osservando"
 
-pt.voiceHelp = "Aiuto"
-pt.voiceHelpDescription = "Richiesta di aiuto"
-pt.voiceFunny = "Scherzo"
-pt.voiceFunnyDescription = "Piccolo scherzo"
-pt.voiceScream = "Urlo"
-pt.voiceScreamDescription = "Come una ragazzina"
-pt.voiceMorose = "Tetro"
-pt.voiceMoroseDescription = "Senti la tristezza"
-
 
 pt.startHelpBystanderTitle = "Sei un innocente"
 pt.startHelpBystander = {

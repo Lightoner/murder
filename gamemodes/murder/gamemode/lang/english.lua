@@ -69,15 +69,6 @@ pt.adminPanel = "Admin Panel"
 
 pt.spectating = "Spectating"
 
-pt.voiceHelp = "Help"
-pt.voiceHelpDescription = "Yell for help"
-pt.voiceFunny = "Funny"
-pt.voiceFunnyDescription = "Bit of a joke"
-pt.voiceScream = "Scream"
-pt.voiceScreamDescription = "Like a little girl"
-pt.voiceMorose = "Morose"
-pt.voiceMoroseDescription = "Feel the sadness"
-
 
 pt.startHelpBystanderTitle = "You are a bystander"
 pt.startHelpBystander = {

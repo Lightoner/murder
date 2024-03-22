@@ -68,15 +68,6 @@ pt.adminPanel = "관리자 패널"
 
 pt.spectating = "관전중"
 
-pt.voiceHelp = "도와줘!"
-pt.voiceHelpDescription = "도움을 요청"
-pt.voiceFunny = "농담"
-pt.voiceFunnyDescription = "농담 따먹기"
-pt.voiceScream = "비명"
-pt.voiceScreamDescription = "여자아이처럼 굴기"
-pt.voiceMorose = "괴로움"
-pt.voiceMoroseDescription = "슬픔을 느끼며"
-
 
 pt.startHelpBystanderTitle = "당신은 시민입니다."
 pt.startHelpBystander = {
