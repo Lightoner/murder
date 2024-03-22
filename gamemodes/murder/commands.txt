@@ -41,6 +41,7 @@ Server ConVars
 	mu_roundlimit <number> - Number of rounds we should play before map change
 	mu_round_time_max <number> - Round time max
 	mu_special_round_countdown_start <number> - Special round countdown start
+	mu_special_round_force <number> - Force the special round with the corresponding id
 	mu_spawn_protection <number> - Spawn protection
 
 Client ConVars

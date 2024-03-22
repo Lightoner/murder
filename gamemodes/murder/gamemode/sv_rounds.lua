@@ -10,6 +10,7 @@ GM.RoundStage = 0
 GM.RoundCount = 0
 GM.SpecialRoundCountdown = math.max(GM.SpecialRoundCountdownStart:GetInt(), 0)
 GM.SpecialRoundStage = 0
+GM.SpecialRoundForce = 0
 GM.SpawnProtectionActive = false
 if GAMEMODE then
 	GM.RoundStage = GAMEMODE.RoundStage
@@ -368,7 +369,12 @@ function GM:StartNewRound()
 	self.CurrentSpawnProtection = math.max(self.SpawnProtection:GetInt(), 0)
 	self.SpawnProtectionActive = true
 	if self.SpecialRoundCountdown == 0 then
-		self.SpecialRoundStage = math.random(1, 2)
+		if self.SpecialRoundForce == 0 then
+			self.SpecialRoundStage = math.random(1, 2)
+		else
+			self.SpecialRoundStage = self.SpecialRoundForce
+			self.SpecialRoundForce = 0
+		end
 		self.SpecialRoundCountdown = math.max(self.SpecialRoundCountdownStart:GetInt(), 0)
 	else
 		self.SpecialRoundCountdown = self.SpecialRoundCountdown - 1
@@ -553,6 +559,26 @@ concommand.Add("mu_special_round_countdown", function (ply, com, args)
 	GAMEMODE.SpecialRoundCountdown = math.max(argInt, 0)
 	
 	GAMEMODE:NetworkRound()
+end)
+
+concommand.Add("mu_special_round_force", function (ply, com, args)
+	if IsValid(ply) && !ply:IsAdmin() then return end
+	if #args < 1 then return end
+	
+	local argInt = tonumber(args[1])
+	if argInt == nil then return end
+	if argInt < 1 || argInt > 2 then return end
+	
+	GAMEMODE.SpecialRoundForce = argInt
+	
+	local text = Translator:VarTranslate(translate.specialRoundForce, {
+		name = translate["specialRoundName" .. tostring(GAMEMODE.SpecialRoundForce)]
+	})
+	if IsValid(ply) then
+		ply:ChatPrint(text)
+	else
+		print(text)
+	end
 end)
 
 function GM:ChangeMap()
