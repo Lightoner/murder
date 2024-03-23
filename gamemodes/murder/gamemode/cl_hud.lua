@@ -409,6 +409,15 @@ function GM:DrawGameHUD(ply)
 
 		drawTextShadow(name, "MersRadial", ScrW() - 20, ScrH() - 10, color, 2, TEXT_ALIGN_BOTTOM)
 	end
+	
+	local shouldDraw = hook.Run("HUDShouldDraw", "MurderGunPickup")
+	if shouldDraw != false then
+		if self.GunPickupFade != nil && self.GunPickupFade + 2 > CurTime() then
+			local col = Color(20, 120, 255)
+			col.a = (1 - (CurTime() - self.GunPickupFade) / 2) * 255
+			drawTextShadow(translate.gunPickup, "MersRadial", ScrW() / 2, ScrH() * 0.75, col, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+	end
 end
 
 function GM:GUIMousePressed(code, vector)
@@ -460,4 +469,15 @@ function GM:HUDShouldDraw( name )
 	end
 
 	return true
+end
+
+function GM:HUDWeaponPickedUp( wep )
+
+	if ( !IsValid( LocalPlayer() ) || !LocalPlayer():Alive() ) then return end
+	if ( !IsValid( wep ) ) then return end
+
+	if wep:GetClass() == "weapon_mu_magnum" then
+		self.GunPickupFade = CurTime()
+	end
+
 end
