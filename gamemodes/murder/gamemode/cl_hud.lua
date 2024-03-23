@@ -401,10 +401,18 @@ function GM:DrawGameHUD(ply)
 	if shouldDraw != false then
 		local name = translate.bystander
 		local color = Color(20,120,255)
+		
+		if LocalPlayer() == ply && ply:HasWeapon("weapon_mu_magnum") then
+			color = Color(120, 70, 245)
+		end
 
 		if LocalPlayer() == ply && self:GetAmMurderer() then
 			name = translate.murderer
-			color = Color(190, 20, 20)
+			if ply:HasWeapon("weapon_mu_knife") then
+				color = Color(190, 20, 20)
+			else
+				color = Color(0, 0, 0)
+			end
 		end
 
 		drawTextShadow(name, "MersRadial", ScrW() - 20, ScrH() - 10, color, 2, TEXT_ALIGN_BOTTOM)
@@ -413,7 +421,7 @@ function GM:DrawGameHUD(ply)
 	local shouldDraw = hook.Run("HUDShouldDraw", "MurderGunPickup")
 	if shouldDraw != false then
 		if self.GunPickupFade != nil && self.GunPickupFade + 2 > CurTime() then
-			local col = Color(20, 120, 255)
+			local col = Color(120, 70, 245)
 			col.a = (1 - (CurTime() - self.GunPickupFade) / 2) * 255
 			drawTextShadow(translate.gunPickup, "MersRadial", ScrW() / 2, ScrH() * 0.75, col, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
