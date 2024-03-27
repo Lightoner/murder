@@ -112,6 +112,12 @@ function GM:DoScoreboardActionPopup(ply)
 			function force:DoClick()
 				RunConsoleCommand("mu_forcenextmurderer", ply:EntIndex())
 			end
+			
+			local forceGunner = actions:AddOption( translate.adminGunnerForce )
+			forceGunner:SetIcon( "icon16/add.png" )
+			function forceGunner:DoClick()
+				RunConsoleCommand("mu_forcenextgunner", ply:EntIndex())
+			end
 
 			if ply:Alive() then
 				local specateThem = actions:AddOption( translate.adminSpectate )

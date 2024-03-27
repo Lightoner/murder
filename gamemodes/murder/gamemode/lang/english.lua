@@ -38,6 +38,8 @@ pt.roundStarted = "A new round has started"
 
 pt.adminMurdererSelect = "{player} will be Murderer next round"
 pt.adminMurdererForce = "Force murderer next round"
+pt.adminGunnerSelect = "{player} will be Gunner next round"
+pt.adminGunnerForce = "Force gunner next round"
 pt.adminSpectate = "Spectate"
 pt.adminMoveToSpectate = "Move to {spectate}"
 

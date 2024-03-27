@@ -38,6 +38,8 @@ pt.roundStarted = "Une nouvelle partie a commencé"
 
 pt.adminMurdererSelect = "{player} sera le meurtrier au prochain tour"
 pt.adminMurdererForce = "Forcer à être le meurtrier"
+pt.adminGunnerSelect = "{player} sera le tireur au prochain tour"
+pt.adminGunnerForce = "Forcer à être le tireur"
 pt.adminSpectate = "Observer"
 pt.adminMoveToSpectate = "Déplacer vers {spectate}"
 

@@ -405,7 +405,9 @@ function GM:StartNewRound()
 		// pick a random murderer, weighted
 		local rand = WeightedRandom()
 		for k, ply in pairs(players) do
-			rand:Add(ply.MurdererChance ^ weightMul, ply)
+			if self.ForceNextGunner == nil || !IsValid(self.ForceNextGunner) || self.ForceNextGunner != ply then
+				rand:Add(ply.MurdererChance ^ weightMul, ply)
+			end
 			ply.MurdererChance = ply.MurdererChance + 1
 		end
 		murderer = rand:Roll()
@@ -442,6 +444,10 @@ function GM:StartNewRound()
 		local noobs = table.Copy(players)
 		table.RemoveByValue(noobs, murderer)
 		local magnum = table.Random(noobs)
+		if self.ForceNextGunner && IsValid(self.ForceNextGunner) && self.ForceNextGunner:Team() == 2 then
+			magnum = self.ForceNextGunner
+			self.ForceNextGunner = nil
+		end
 		if IsValid(magnum) then
 			magnum:Give("weapon_mu_magnum")
 		end
@@ -526,7 +532,32 @@ concommand.Add("mu_forcenextmurderer", function (ply, com, args)
 	end
 
 	GAMEMODE.ForceNextMurderer = ent
+	if GAMEMODE.ForceNextGunner == ent then
+		GAMEMODE.ForceNextGunner = nil
+	end
 	local msgs = Translator:AdvVarTranslate(translate.adminMurdererSelect, {
+		player = {text = ent:Nick(), color = team.GetColor(2)}
+	})
+	local ct = ChatText()
+	ct:AddParts(msgs)
+	ct:Send(ply)
+end)
+
+concommand.Add("mu_forcenextgunner", function (ply, com, args)
+	if !ply:IsAdmin() then return end
+	if #args < 1 then return end
+
+	local ent = Entity(tonumber(args[1]) or -1)
+	if !IsValid(ent) || !ent:IsPlayer() then 
+		ply:ChatPrint("not a player")
+		return 
+	end
+
+	GAMEMODE.ForceNextGunner = ent
+	if GAMEMODE.ForceNextMurderer == ent then
+		GAMEMODE.ForceNextMurderer = nil
+	end
+	local msgs = Translator:AdvVarTranslate(translate.adminGunnerSelect, {
 		player = {text = ent:Nick(), color = team.GetColor(2)}
 	})
 	local ct = ChatText()
