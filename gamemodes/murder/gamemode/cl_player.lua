@@ -2,7 +2,7 @@ local PlayerMeta = FindMetaTable("Player")
 local EntityMeta = FindMetaTable("Entity")
 
 function GM:PlayerFootstep(ply, pos, foot, sound, volume, filter)
-	if ply:KeyDown(IN_WALK) and !ply:KeyDown(IN_SPEED) then
+	if ply:IsWalking() then
 		return true
 	end
 end
