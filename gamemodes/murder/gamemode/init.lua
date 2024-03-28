@@ -47,6 +47,8 @@ GM.ShowAdminsOnScoreboard = CreateConVar("mu_scoreboard_show_admins", 1, bit.bor
 GM.AdminPanelAllowed = CreateConVar("mu_allow_admin_panel", 1, bit.bor(FCVAR_NOTIFY), "Should allow admins to use mu_admin_panel" )
 GM.ShowSpectateInfo = CreateConVar("mu_show_spectate_info", 1, bit.bor(FCVAR_NOTIFY), "Should show players name and color to spectators" )
 
+GM.AFKTimeMax = CreateConVar("mu_afk_time_max", 60, bit.bor(FCVAR_NOTIFY), "AFK time max" )
+
 function GM:Initialize() 
 	self:LoadSpawns()
 	self.DeathRagdolls = {}
@@ -94,11 +96,17 @@ function GM:Think()
 			ply.LastSpectatePosSet = CurTime() + 0.25
 			ply:SetPos(ply:GetCSpectatee():GetPos())
 		end
-		if !ply.HasMoved then
-			if ply:IsBot() || ply:KeyDown(IN_FORWARD) || ply:KeyDown(IN_JUMP) || ply:KeyDown(IN_ATTACK) || ply:KeyDown(IN_ATTACK2)
-				|| ply:KeyDown(IN_MOVELEFT) || ply:KeyDown(IN_MOVERIGHT) || ply:KeyDown(IN_BACK) || ply:KeyDown(IN_DUCK) then
-				ply.HasMoved = true
-			end
+		if ply:IsBot() || ply:KeyDown(IN_FORWARD) || ply:KeyDown(IN_JUMP) || ply:KeyDown(IN_ATTACK) || ply:KeyDown(IN_ATTACK2)
+			|| ply:KeyDown(IN_MOVELEFT) || ply:KeyDown(IN_MOVERIGHT) || ply:KeyDown(IN_BACK) || ply:KeyDown(IN_DUCK) then
+			ply.HasMoved = true
+			ply.HasMovedTime = CurTime()
+		end
+		if ply:Alive() && ply.HasMovedTime && ply.HasMovedTime + math.max(self.AFKTimeMax:GetInt(), 0) < CurTime() then
+			ply.AFK = true
+			ply:Ignite(math.huge)
+		elseif ply.AFK then
+			ply.AFK = false
+			ply:Extinguish()
 		end
 	end
 end

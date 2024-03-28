@@ -55,6 +55,8 @@ function GM:PlayerSpawn( ply )
 	if IsValid(spawnPoint) then
 		ply:SetPos(spawnPoint:GetPos())
 	end
+	
+	ply.HasMovedTime = CurTime()
 end
 
 function GM:PlayerLoadout(ply)
