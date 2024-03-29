@@ -57,6 +57,12 @@ function GM:PlayerSpawn( ply )
 	end
 	
 	ply.HasMovedTime = CurTime()
+	ply.AFK = false
+end
+
+function GM:PostPlayerDeath(ply)
+	ply.HasMovedTime = nil
+	ply.AFK = false
 end
 
 function GM:PlayerLoadout(ply)

@@ -99,9 +99,11 @@ function GM:Think()
 		if ply:IsBot() || ply:KeyDown(IN_FORWARD) || ply:KeyDown(IN_JUMP) || ply:KeyDown(IN_ATTACK) || ply:KeyDown(IN_ATTACK2)
 			|| ply:KeyDown(IN_MOVELEFT) || ply:KeyDown(IN_MOVERIGHT) || ply:KeyDown(IN_BACK) || ply:KeyDown(IN_DUCK) then
 			ply.HasMoved = true
-			ply.HasMovedTime = CurTime()
+			if ply.HasMovedTime then
+				ply.HasMovedTime = CurTime()
+			end
 		end
-		if ply:Alive() && ply.HasMovedTime && ply.HasMovedTime + math.max(self.AFKTimeMax:GetInt(), 0) < CurTime() then
+		if ply.HasMovedTime && ply.HasMovedTime + math.max(self.AFKTimeMax:GetInt(), 0) < CurTime() then
 			ply.AFK = true
 			ply:Ignite(math.huge)
 		elseif ply.AFK then
