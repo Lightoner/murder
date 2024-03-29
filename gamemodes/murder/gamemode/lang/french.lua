@@ -111,6 +111,7 @@ pt.gunPickup = "Vous avez ramassé le pistolet"
 pt.roundTimeLeft = "Temps restant: {time}"
 pt.specialRoundCountdown = "{countdown} manche(s) restante(s) avant la manche spéciale"
 pt.specialRound = "Manche spéciale: {name}"
+pt.specialRoundTitle = "Manche spéciale"
 pt.specialRoundName1 = "Mélée générale couteau"
 pt.specialRoundStartHelp1 = {
 	"Tout le monde est meurtrier",

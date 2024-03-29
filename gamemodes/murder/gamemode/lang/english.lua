@@ -111,6 +111,7 @@ pt.gunPickup = "You picked up the gun"
 pt.roundTimeLeft = "Time left: {time}"
 pt.specialRoundCountdown = "{countdown} round(s) left before special round"
 pt.specialRound = "Special round: {name}"
+pt.specialRoundTitle = "Special round"
 pt.specialRoundName1 = "Free for all knife"
 pt.specialRoundStartHelp1 = {
 	"Everyone is murderer",
