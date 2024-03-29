@@ -60,9 +60,16 @@ function GM:PlayerSpawn( ply )
 	ply.AFK = false
 end
 
-function GM:PostPlayerDeath(ply)
+function GM:PlayerSilentDeath( ply )
+
 	ply.HasMovedTime = nil
-	ply.AFK = false
+	if ply.AFK then
+		ply.AFK = false
+		ply:Extinguish()
+	end
+
+	ply.NextSpawnTime = CurTime() + 2
+	ply.DeathTime = CurTime()
 end
 
 function GM:PlayerLoadout(ply)
@@ -120,6 +127,12 @@ function GM:PlayerSetModel( ply )
 end
 
 function GM:DoPlayerDeath( ply, attacker, dmginfo )
+
+	ply.HasMovedTime = nil
+	if ply.AFK then
+		ply.AFK = false
+		ply:Extinguish()
+	end
 
 	for k, weapon in pairs(ply:GetWeapons()) do
 		if weapon:GetClass() == "weapon_mu_magnum" then
