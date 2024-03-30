@@ -69,7 +69,8 @@ end
 function GM:DoScoreboardActionPopup(ply)
 	local actions = DermaMenu()
 
-	if ply:IsAdmin() then
+	local showAdmins = GAMEMODE.RoundSettings.ShowAdminsOnScoreboard
+	if showAdmins && ply:IsAdmin() then
 		local admin = actions:AddOption(translate.scoreboardActionAdmin)
 		admin:SetIcon("icon16/shield.png")
 	end
