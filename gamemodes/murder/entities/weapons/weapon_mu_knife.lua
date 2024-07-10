@@ -188,7 +188,9 @@ function SWEP:AttackTrace()
 			dmg:SetDamageForce(self.Owner:GetAimVector() * self.Primary.Force)
 			dmg:SetDamagePosition(tr.HitPos)
 			dmg:SetDamageType(DMG_SLASH)
+			self.Owner:SetNotSolid(true) -- Blood decals should not hit the attacker? Dirty fix that make the attacker not solid only during the execution of DispatchTraceAttack of the entity. This will at least prevent the hit of any traces of solid entities, including the internal source engine traces of blood decals. The real problem might be elsewhere in the weapon implementation
 			tr.Entity:DispatchTraceAttack(dmg, tr)
+			self.Owner:SetNotSolid(false)
 
 			if tr.Entity != self && tr.Entity != self.Owner && (tr.Entity:IsPlayer() || tr.Entity:GetClass() == "prop_ragdoll") then
 				local edata = EffectData()
