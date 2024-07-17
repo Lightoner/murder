@@ -134,6 +134,7 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		ply:Extinguish()
 	end
 
+	ply:SetActiveWeapon(NULL) -- Dirty fix that holster the active weapon to prevent a bug drawing the weapon view model while being dead. The real problem might be from some view model from weapon getting switched to while dying including the one from weapon_mu_hands
 	for k, weapon in pairs(ply:GetWeapons()) do
 		if weapon:GetClass() == "weapon_mu_magnum" then
 			ply:DropWeapon(weapon)
