@@ -51,6 +51,8 @@ SWEP.Secondary.DefaultClip	= 0
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
+SWEP.m_WeaponDeploySpeed = math.huge
+
 function SWEP:Initialize()
 	self:SetWeaponState("holster")
 	self:CalculateHoldType()
@@ -226,7 +228,8 @@ function SWEP:Deploy()
 	if IsValid(vm) then
 		if self.SequenceDraw then
 			vm:SendViewModelMatchingSequence(vm:LookupSequence(self.SequenceDraw))
-			time = vm:SequenceDuration()
+			vm:SetPlaybackRate(self:GetDeploySpeed())
+			time = vm:SequenceDuration() / self:GetDeploySpeed()
 		elseif self.SequenceDrawTime then
 			time = self.SequenceDrawTime
 		end
