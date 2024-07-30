@@ -38,6 +38,13 @@ SWEP.Primary.AutoReload = true
 SWEP.ReloadSequence = "reload"
 SWEP.ReloadSound = Sound("Weapon_357.Reload")
 
+--[[
+Total time between two shots = fire sequence duration + reload sequence duration = 0.8 + 3.666667 = 4.466667 seconds
+(Reload gesture sequence duration = 2.868421 seconds)
+SWEP.ReloadTime will adjust the reload sequence speed to match the desired time. The speed will also be applied to the reload gesture sequence
+--]]
+SWEP.ReloadTime = nil
+
 SWEP.PrintName = translate and translate.magnum or "Magnum"
 function SWEP:Initialize()
 	self.BaseClass.Initialize(self)

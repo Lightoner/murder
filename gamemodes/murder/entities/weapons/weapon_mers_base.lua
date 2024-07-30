@@ -24,6 +24,20 @@ else
 			wep:SetWeaponHoldType(net.ReadString())
 		end
 	end)
+	
+	hook.Add("Think", "FixReloadGestureSpeed", function()
+		-- Fix reload gesture speed for others players because it doesn't seem to be networked
+		for k, ply in ipairs(player.GetAll()) do
+			if ply != LocalPlayer() then
+				local wep = ply:GetActiveWeapon()
+				if IsValid(wep) && wep.GetReloadGestureSpeed && wep:GetReloadGestureSpeed() > 0 then
+					if string.StartsWith(ply:GetSequenceActivityName(ply:GetLayerSequence(GESTURE_SLOT_ATTACK_AND_RELOAD)), "ACT_HL2MP_GESTURE_RELOAD") && ply:GetLayerCycle(GESTURE_SLOT_ATTACK_AND_RELOAD) == 0 then
+						ply:SetLayerPlaybackRate(GESTURE_SLOT_ATTACK_AND_RELOAD, wep:GetReloadGestureSpeed())
+					end
+				end
+			end
+		end
+	end)
 end
 SWEP.Base = "weapon_base"
 SWEP.Weight			= 5
@@ -87,6 +101,7 @@ function SWEP:SetupDataTables()
 	self:NetworkVar("Float", 0, "ReloadEnd")
 	self:NetworkVar("Float", 1, "NextIdle")
 	self:NetworkVar("Float", 2, "DrawEnd")
+	self:NetworkVar("Float", 31, "ReloadGestureSpeed")
 end
 
 function SWEP:IsIdle()
@@ -208,13 +223,25 @@ function SWEP:Reload()
 			local spare = self.Owner:GetAmmoCount(self:GetPrimaryAmmoType())
 			if spare > 0 || self.Primary.InfiniteAmmo then
 				local vm = self.Owner:GetViewModel()
-				vm:SendViewModelMatchingSequence(vm:LookupSequence(self.ReloadSequence))
+				local sequenceId, sequenceDuration = vm:LookupSequence(self.ReloadSequence)
+				local time = sequenceDuration
+				local speed = 1
+				if self.ReloadTime != nil then
+					time = self.ReloadTime
+					if sequenceDuration > 0 then
+						speed = sequenceDuration / self.ReloadTime
+					end
+				end
+				self:SetReloadGestureSpeed(speed)
+				vm:SendViewModelMatchingSequence(sequenceId)
+				vm:SetPlaybackRate(speed)
 				if self.ReloadSound then
 					self:EmitSound(self.ReloadSound)
 				end
 				self.Owner:SetAnimation(PLAYER_RELOAD)
-				self:SetReloadEnd(CurTime() + vm:SequenceDuration())
-				self:SetNextIdle(CurTime() + vm:SequenceDuration())
+				self.Owner:SetLayerPlaybackRate(GESTURE_SLOT_ATTACK_AND_RELOAD, speed)
+				self:SetReloadEnd(CurTime() + time)
+				self:SetNextIdle(CurTime() + time)
 			end
 		end
 	end
