@@ -78,6 +78,16 @@ SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "none"
 
+
+--[[
+Minimum time between two knife throws = AfterThrowDisallowPickUpTime + deploy time = AfterThrowDisallowPickUpTime + (draw sequence duration / m_WeaponDeploySpeed) = AfterThrowDisallowPickUpTime + (1 / m_WeaponDeploySpeed)
+Example:
+AfterThrowDisallowPickUpTime = 4.466667 (total time between two magnum shots)
+m_WeaponDeploySpeed = math.huge (infinity)
+AfterThrowDisallowPickUpTime + (1 / m_WeaponDeploySpeed) = 4.466667 + (1 / math.huge) = 4.466667 + 0 = 4.466667 seconds
+--]]
+SWEP.AfterThrowDisallowPickUpTime = 4.466667
+
 SWEP.PrintName = translate and translate.knife or "Knife"
 function SWEP:Initialize()
 	self.PrintName = translate and translate.knife or "Knife"
@@ -225,6 +235,7 @@ end
 function SWEP:ThrowKnife(force)
 	local ent = ents.Create("mu_knife")
 	ent:SetOwner(self.Owner)
+	ent.DisallowPickUpEnd = CurTime() + self.AfterThrowDisallowPickUpTime
 	ent:SetPos(self.Owner:GetShootPos())
 	local knife_ang = Angle(-28,0,0) + self.Owner:EyeAngles()
 	knife_ang:RotateAroundAxis(knife_ang:Right(), -90)

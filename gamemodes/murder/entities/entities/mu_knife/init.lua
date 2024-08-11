@@ -3,7 +3,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
-local ENT_LIFETIME_MAX = 10
+local ENT_KILL_DELAY = 10
+
 function ENT:Initialize()
 	self:SetModel("models/weapons/w_knife_t.mdl")
 
@@ -22,30 +23,61 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
-	self:Fire("kill", "", ENT_LIFETIME_MAX)
+	self.FireKillTime = CurTime() + ENT_KILL_DELAY
 
 	self.HitSomething = false
 end
 
+function ENT:CreateTimerKnifeWeapon()
+	if self.TimerKnifeWeaponCreated then return end
+
+	if !IsValid(self) || self:IsMarkedForDeletion() then return end
+	if !IsValid(self.Owner) || !self.Owner:IsPlayer() then return end
+
+	local knife = ents.Create("weapon_mu_knife")
+	knife.TimerKnife = true
+	knife.TimerKnifeOwner = self.Owner
+	knife.DisallowPickUpEnd = self.DisallowPickUpEnd
+
+	self.TimerKnifeWeaponCreated = true
+end
+
+hook.Add("Think", "TimerKnivesThink", function()
+	for k, knife in ipairs(ents.FindByClass("weapon_mu_knife")) do
+		if IsValid(knife) && !knife:IsMarkedForDeletion() && knife.TimerKnife then
+			if IsValid(knife.TimerKnifeOwner) then
+				if knife.DisallowPickUpEnd == nil || knife.DisallowPickUpEnd < CurTime() then
+					if knife.TimerKnifeOwner:Alive() then
+						knife.TimerKnifeOwner:Give("weapon_mu_knife")
+						knife:Remove()
+					end
+				end
+			else
+				knife:Remove()
+			end
+		end
+	end
+end)
+
 function ENT:Think()
+	if self.FireKillTime != nil && self.FireKillTime <= CurTime() then
+		self.FireKillTime = nil
+		self:CreateTimerKnifeWeapon()
+		self:Fire("kill", "")
+	end
 	if self.RemoveNext && IsValid(self) then
 		self.RemoveNext = false
+		self:CreateTimerKnifeWeapon()
 		self:Remove()
 	end
-	if self.HitSomething && self:GetVelocity():Length2D() < 1.5 then
+	if self.HitSomething then
 		self.HitSomething = false
+		self:CreateTimerKnifeWeapon()
 		self:Remove()
 	end
 
 	self:NextThink(CurTime())
 	return true
-end
-
-function ENT:OnRemove()
-	local owner = self:GetOwner()
-	if owner:GetMurderer() then
-		owner:Give("weapon_mu_knife")
-	end
 end
 
 local function addangle(ang,ang2)
