@@ -3,6 +3,20 @@ if SERVER then
 else
 	function SWEP:DrawWeaponSelection( x, y, w, h, alpha )
 	end
+	
+	hook.Add("PlayerFireAnimationEvent", "FixSpectateMagnumDoubleReloadSounds", function(ply, pos, ang, event, name)
+		-- Dirty fix to prevent magnum reload sounds from the player reload gesture animation to be heard when spectating a player in OBS_MODE_IN_EYE. The sounds from the view model are already heard
+		if event == 15 then
+			if name == "Weapon_357.OpenLoader" || name == "Weapon_357.RemoveLoader" || name == "Weapon_357.ReplaceLoader" then
+				local wep = ply:GetActiveWeapon()
+				if IsValid(wep) && wep:GetClass() == "weapon_mu_magnum" then
+					if LocalPlayer():GetObserverMode() == OBS_MODE_IN_EYE && LocalPlayer():GetObserverTarget() == ply && !LocalPlayer():ShouldDrawLocalPlayer() then
+						return true
+					end
+				end
+			end
+		end
+	end)
 end
 
 SWEP.Base = "weapon_mers_base"
